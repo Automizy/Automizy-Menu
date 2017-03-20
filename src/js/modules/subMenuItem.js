@@ -1,5 +1,5 @@
 define([
-    "js/core/core"
+    "js/init/init"
 ], function () {
     $AM.modules.subMenuItem = function () {
         var t = this;
