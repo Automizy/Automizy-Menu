@@ -5,7 +5,7 @@
     "automizy-menu",
     "automizy"
   ],
-  "private": true,
+  "private": false,
   "ignore": [
     "**/.*",
     "build",
