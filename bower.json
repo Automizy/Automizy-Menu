@@ -1,6 +1,6 @@
 {
   "name": "automizy-menu",
-  "description": "AutomizyMenuDescription",
+  "description": "Create Automizy Menu",
   "keywords":[
     "automizy-menu",
     "automizy"
@@ -22,10 +22,7 @@
     "src/am.css"
   ],
   "authors":[
-    { "name": "Gyorgy Reti", "email": "gyorgy.reti@automizy.com" },
-    { "name": "Dominik Sagi", "email": "dominik.sagi@automizy.com" },
-    { "name": "Abel Enekes", "email": "abel.enekes@automizy.com" },
-    { "name": "Gabor Koncz", "email": "gabor.koncz@automizy.com" }
+    { "name": "Gyorgy Reti", "email": "gyorgy.reti@automizy.com" }
   ],
   "repository": {
     "type": "git",
