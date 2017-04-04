@@ -16,5 +16,5 @@ require([
     "js/elements/layout"
 
 ], function () {
-    console.log('%c AutomizyMenu loaded! ', 'background: #000000; color: #bada55; font-size:14px');
+    //console.log('%c AutomizyMenu loaded! ', 'background: #000000; color: #bada55; font-size:14px');
 });

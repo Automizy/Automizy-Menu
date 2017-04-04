@@ -12,20 +12,21 @@
         return false;
     }
     window.AutomizyMenu = window.$AM = new AutomizyProject({
+        name:'automizy-menu',
         variables:{
             menuItems:[],
             subMenuList:[]
         },
         plugins:[
             {
-                name:'fontAwesome',
+                name:'font-awesome',
                 skipCondition:hasFont('fa', 'FontAwesome'),
-                css:$AM.config.dir + "/vendor/fontawesome/css/font-awesome.min.css"
+                css:"vendor/fontawesome/css/font-awesome.min.css"
             },
             {
-                name:'automizyIconSet',
+                name:'automizy-icon-set',
                 skipCondition:hasFont('automizy-icon', 'Automizy-Icon-Set'),
-                css:$AM.config.dir + "/vendor/automizy-icon-set/automizy-icon-set.css"
+                css:"vendor/automizy-icon-set/automizy-icon-set.css"
             }
         ]
     });
@@ -525,7 +526,7 @@
 })();
 
 (function(){
-    console.log('%c AutomizyMenu loaded! ', 'background: #000000; color: #bada55; font-size:14px');
+    //console.log('%c AutomizyMenu loaded! ', 'background: #000000; color: #bada55; font-size:14px');
 })();
 
 (function(){})();
