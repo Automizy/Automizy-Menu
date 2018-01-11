@@ -19,6 +19,7 @@ define([
             opened: false,
             single:false,
             visibility:true,
+            autoActivate:true,
             content: '',
             icon: 'fa fa-flash',
             name: '',
@@ -39,8 +40,12 @@ define([
 
         t.d.$menuItemBox.click(function () {
             t.click();
-            if(t.d.subMenus.length > 0) {
-                t.toggle();
+            if(t.autoActivate()) {
+                if (t.d.subMenus.length > 0) {
+                    t.toggle();
+                } else {
+                    t.active();
+                }
             }
         });
 
@@ -57,15 +62,15 @@ define([
         var t = this;
         if (typeof name !== 'undefined') {
             t.d.name = name;
+            $AM.menuList[t.d.name] = t;
             return t;
         }
         return t.d.name;
     };
     p.open = function () {
         var t = this;
-        $AM.closeAllMenu();
+        t.active();
         t.d.opened = true;
-        t.widget().addClass('automizy-active');
         t.d.$subMenuItemBox.stop().slideDown();
         t.d.$arrow.removeClass('fa-angle-right').addClass('fa-angle-down');
         return t;
@@ -76,6 +81,12 @@ define([
         t.d.$subMenuItemBox.stop().slideUp();
         t.widget().removeClass('automizy-active');
         t.d.$arrow.removeClass('fa-angle-down').addClass('fa-angle-right');
+        return t;
+    };
+    p.active = function () {
+        var t = this;
+        $AM.closeAllMenu();
+        t.widget().addClass('automizy-active');
         return t;
     };
     p.toggle = function () {
@@ -96,6 +107,15 @@ define([
         }
         t.d.click.apply(t, [t]);
         return t;
+    };
+
+    p.autoActivate = function (autoActivate) {
+        var t = this;
+        if (typeof autoActivate !== 'undefined') {
+            t.d.autoActivate = autoActivate;
+            return t;
+        }
+        return t.d.autoActivate;
     };
 
     p.content = p.html = p.text = function (content) {

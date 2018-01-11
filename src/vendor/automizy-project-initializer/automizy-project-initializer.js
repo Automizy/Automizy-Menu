@@ -6,23 +6,23 @@ window.AutomizyProject = function(obj){
     
     var $API = this;
 
-    $API.version = '0.1.1';
+    $API.version = obj.version || '0.1.1';
     $API.name = obj.name || false;
-    $API.elements = {};
-    $API.dialogs = {};
-    $API.inputs = {};
-    $API.buttons = {};
-    $API.forms = {};
-    $API.functions = {};
-    $API.modules = {};
-    $API.xhr = {};
-    $API.config = {
+    $API.elements = obj.elements || {};
+    $API.dialogs = obj.dialogs || {};
+    $API.inputs = obj.inputs || {};
+    $API.buttons = obj.buttons || {};
+    $API.forms = obj.forms || {};
+    $API.functions = obj.functions || {};
+    $API.modules = obj.modules || {};
+    $API.xhr = obj.xhr || {};
+    $API.config = obj.config || {
         dir:'.',
         url:'https://app.automizy.com'
     };
-    $API.m = {};
-    $API.d = {};
-    $API.initializer = {};
+    $API.m = obj.m || {};
+    $API.d = obj.d || {};
+    $API.initializer = obj.initializer || {};
 
     if(typeof obj.variables !== 'undefined'){
         for(var i in obj.variables){
@@ -156,7 +156,11 @@ window.AutomizyProject = function(obj){
             for (var j = 0; j < plugin.js.length; j++) {
                 deferreds.push($.getScript(plugin.js[j]));
             }
-            plugin.xhr = $.when.apply(null, deferreds).always(function(){
+            plugin.xhr = $.when.apply(null, deferreds);
+            for(var i = 0; i < plugin.xhrAlwaysFunctions.length; i++){
+                plugin.xhr.always(plugin.xhrAlwaysFunctions[i]);
+            }
+            plugin.xhr.always(function(){
                 t.pluginThen(plugin);
             });
 
@@ -201,7 +205,12 @@ window.AutomizyProject = function(obj){
                         skipCondition: pluginLocal.skipCondition,
                         css: pluginLocal.css,
                         js: pluginLocal.js,
-                        xhr: false,
+                        xhr: {
+                            always:function(fnc){
+                                this.xhrAlwaysFunctions.push(fnc);
+                            }
+                        },
+                        xhrAlwaysFunctions:[],
                         requiredPlugins: pluginLocal.requiredPlugins || [],
                         completed: false,
                         completeFunctions: [pluginLocal.complete]
@@ -214,13 +223,13 @@ window.AutomizyProject = function(obj){
                     } else {
                         hasActivePlugin = true;
                         t.d.globalPluginsCount++;
-                        AutomizyGlobalPlugins[pluginLocal.name].xhr.always(function () {
+                        AutomizyGlobalPlugins[pluginLocal.name].xhr.always.apply(AutomizyGlobalPlugins[pluginLocal.name], [function () {
                             t.d.loadedGlobalPluginsCount++;
                             if (t.d.loadedPluginsCount === t.d.allPluginsCount && t.d.globalPluginsCount === t.d.loadedGlobalPluginsCount && t.d.completeFunctionReady) {
                                 t.d.completeFunctionReady = false;
                                 t.complete();
                             }
-                        })
+                        }]);
                     }
                 }
             }

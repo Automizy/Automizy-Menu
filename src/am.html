@@ -19,13 +19,14 @@
 
                 var dashboard = $AM.addMenuItem().name('dashboards').icon('fa-dashboard').html('Dashboards');
                 var contacts = $AM.addMenuItem().name('contacts').icon('fa-users').html('Contacts');
-                var bulkEmails = $AM.addMenuItem().name('bulkEmails').icon('fa-paper-plane-o').html('Bulk emails');
-                var automation = $AM.addMenuItem().name('automation').icon('fa-flash').html('Automation');
-                var settings = $AM.addMenuItem().name('settings').icon('fa-cogs').html('Settings');
                 $AM.addSeparator();
-                var academy = $AM.addMenuItem().name('academy').icon('fa-graduation-cap').html('Automizy Academy').click(function(){
-                    alert('Open academy page');
+                var academy = $AM.addMenuItem().name('academy').icon('fa-graduation-cap').html('Automizy Academy').single(true).click(function(){
+
                 });
+                var settings = $AM.addMenuItem(true).name('settings').icon('fa-cog').html('Settings').single(true).click(function(){
+
+                });
+
 
                 dashboard.addSubMenu().html('Bulk email overview').name('bulkEmailOverview').click(function () {
                     alert('ok')
@@ -63,7 +64,7 @@
         });
     </script>
 </head>
-<body style="margin:0">
+<body style="width: 100%; height: 100%; overflow: hidden; font-family:'Segoe UI'">
 
 </body>
 </html>

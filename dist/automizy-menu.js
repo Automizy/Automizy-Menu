@@ -15,6 +15,7 @@
         name:'automizy-menu',
         variables:{
             menuItems:[],
+            menuList:[],
             subMenuList:[]
         },
         plugins:[
@@ -35,9 +36,14 @@
 
 (function(){
 
-    $AM.addMenuItem = function(){
+    $AM.addMenuItem = function(bottom){
+        bottom = bottom || false;
         var menuItem =  (new $AM.modules.menuItem);
-        menuItem.widget().appendTo($AM.$menuBox);
+        if(bottom){
+            menuItem.widget().appendTo($AM.$bottomMenuBox);
+        }else {
+            menuItem.widget().appendTo($AM.$menuBox);
+        }
         $AM.menuItems.push(menuItem);
         return menuItem;
     };
@@ -138,6 +144,7 @@
             opened: false,
             single:false,
             visibility:true,
+            autoActivate:true,
             content: '',
             icon: 'fa fa-flash',
             name: '',
@@ -158,8 +165,12 @@
 
         t.d.$menuItemBox.click(function () {
             t.click();
-            if(t.d.subMenus.length > 0) {
-                t.toggle();
+            if(t.autoActivate()) {
+                if (t.d.subMenus.length > 0) {
+                    t.toggle();
+                } else {
+                    t.active();
+                }
             }
         });
 
@@ -176,15 +187,15 @@
         var t = this;
         if (typeof name !== 'undefined') {
             t.d.name = name;
+            $AM.menuList[t.d.name] = t;
             return t;
         }
         return t.d.name;
     };
     p.open = function () {
         var t = this;
-        $AM.closeAllMenu();
+        t.active();
         t.d.opened = true;
-        t.widget().addClass('automizy-active');
         t.d.$subMenuItemBox.stop().slideDown();
         t.d.$arrow.removeClass('fa-angle-right').addClass('fa-angle-down');
         return t;
@@ -195,6 +206,12 @@
         t.d.$subMenuItemBox.stop().slideUp();
         t.widget().removeClass('automizy-active');
         t.d.$arrow.removeClass('fa-angle-down').addClass('fa-angle-right');
+        return t;
+    };
+    p.active = function () {
+        var t = this;
+        $AM.closeAllMenu();
+        t.widget().addClass('automizy-active');
         return t;
     };
     p.toggle = function () {
@@ -215,6 +232,15 @@
         }
         t.d.click.apply(t, [t]);
         return t;
+    };
+
+    p.autoActivate = function (autoActivate) {
+        var t = this;
+        if (typeof autoActivate !== 'undefined') {
+            t.d.autoActivate = autoActivate;
+            return t;
+        }
+        return t.d.autoActivate;
     };
 
     p.content = p.html = p.text = function (content) {
@@ -518,6 +544,7 @@
 
 
         $AM.$menuBox = $('<div id="automizy-menu-menuitem-box"></div>').appendTo($AM.$widgetTd2);
+        $AM.$bottomMenuBox = $('<div id="automizy-menu-menuitem-box-bottom"></div>').appendTo($AM.$menuBox);
 
 
         $AM.layoutReady();

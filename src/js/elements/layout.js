@@ -32,6 +32,7 @@ define([
 
 
         $AM.$menuBox = $('<div id="automizy-menu-menuitem-box"></div>').appendTo($AM.$widgetTd2);
+        $AM.$bottomMenuBox = $('<div id="automizy-menu-menuitem-box-bottom"></div>').appendTo($AM.$menuBox);
 
 
         $AM.layoutReady();

@@ -15,6 +15,7 @@ define([], function () {
         name:'automizy-menu',
         variables:{
             menuItems:[],
+            menuList:[],
             subMenuList:[]
         },
         plugins:[
